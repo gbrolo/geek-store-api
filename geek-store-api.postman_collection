@@ -1,0 +1,188 @@
+{
+	"info": {
+		"_postman_id": "c3c40b8b-b0d8-4c27-8b9f-2d202809ec7c",
+		"name": "Geek Store",
+		"description": "Routes for Geek Store API.\r\nThis API is intended as a starter API to handle requests for a simple retail ecommerce store.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET All products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products"
+					]
+				},
+				"description": "Get all products in collection"
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE product",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sku\": \"FUNKO_POP_OBI_WAN\",\r\n    \"name\": \"Funko Pop: Obi Wan Kenobi\",\r\n    \"tags\": \"star,wars,jedi,lightsaber\",\r\n    \"price\": 125,\r\n    \"stock\": 5,\r\n    \"images\": [\"https://cdn1.emarketxpress.com/products/obi_wan.jpg?token=55se0kkhskg3bz-1606015977695\"],\r\n    \"category\": \"FUNKO_POP\",\r\n    \"featured\": true,\r\n    \"description\": \"Funko Pop del maestro Jedi Obi Wan Kenobi\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products"
+					]
+				},
+				"description": "Create a single product"
+			},
+			"response": []
+		},
+		{
+			"name": "GET Single product by Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/products/5fe395a9784f4430f86e4f7d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products",
+						"5fe395a9784f4430f86e4f7d"
+					]
+				},
+				"description": "Get a product using id"
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE product",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \r\n    \"name\": \"Funko Pop: Obi Wan Kenobi Editado\",\r\n    \"tags\": \"star,wars,jedi,lightsaber\",    \r\n    \"stock\": 8\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/products/5fe395a9784f4430f86e4f7d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products",
+						"5fe395a9784f4430f86e4f7d"
+					]
+				},
+				"description": "Using id"
+			},
+			"response": []
+		},
+		{
+			"name": "SEARCH products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/products?search=jedi",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "jedi"
+						}
+					]
+				},
+				"description": "Using search query"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Single product by Id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/products/5fe397c7784f4430f86e4f7e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products",
+						"5fe397c7784f4430f86e4f7e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE All products",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
