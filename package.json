@@ -6,20 +6,22 @@
     "start": "npm run prod",
     "server": "node ./dist-server/bin/www",
     "dev": "npm-run-all build server",
-    "prod": "npm-run-all test build mocha-test server",
+    "prod": "npm-run-all clean test mocha-test restore-db build server",
     "transpile": "babel ./server --out-dir dist-server",
     "clean": "rimraf dist-server",
     "build": "npm-run-all clean transpile",
     "watch:dev": "nodemon",
     "mocha-test": "mocha --require @babel/polyfill --require @babel/register \"./{,!(node_modules)/**/}*.test.js\"",
     "test": "standard",
-    "fix-js": "standard --fix"
+    "fix-js": "standard --fix",
+    "restore-db": "mongorestore backup/dump"
   },
   "standard": {
     "ignore": [
       "**/tests/",
       "server/bin/*",
-      "server/app.js"
+      "server/app.js",
+      "server/helpers"
     ]
   },
   "nodemonConfig": {
@@ -52,6 +54,7 @@
     "express": "~4.16.1",
     "http-status-codes": "^2.1.4",
     "mocha": "^8.2.1",
+    "mongodb-restore": "^1.6.2",
     "mongoose": "^5.11.8",
     "morgan": "~1.9.1",
     "nodemon": "^2.0.6",

@@ -5,5 +5,5 @@ export default new Schema({
     type: String,
     required: false,
     length: { min: 1, max: 150 }
-  },
+  }
 })

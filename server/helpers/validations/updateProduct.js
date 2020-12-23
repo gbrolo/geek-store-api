@@ -46,7 +46,7 @@ export default new Schema({
   category: {
     type: String,
     required: false,
-    match: /^[A-Z0-9\_\-]{5,40}$/
+    match: /^[A-Z0-9\_\-]{2,40}$/
   },
   featured: {
     type: Boolean,

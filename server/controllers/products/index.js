@@ -13,9 +13,8 @@ const Product = db.products
 export const createProduct = (req, res, next) => {
   validateRequest(req.body, productSchema, 'create product')
     .then(() => {
-      const searchKeywords = genProductKeywords(req.body)      
-      const product = new Product({...req.body, searchKeywords})
-      console.log(product)
+      const searchKeywords = genProductKeywords(req.body)
+      const product = new Product({ ...req.body, searchKeywords })
 
       product
         .save(product)
@@ -26,7 +25,7 @@ export const createProduct = (req, res, next) => {
             data
           )
 
-          req.handleSuccess(succ, res)          
+          req.handleSuccess(succ, res)
         })
         .catch(error => {
           next(new ErrorHandler(
@@ -45,7 +44,7 @@ export const getProducts = (req, res, next) => {
   validateRequest(req.query, getProductsSchema, 'get products')
     .then(() => {
       const search = req.query.search
-      const condition = search ? { searchKeywords: { $regex: new RegExp(search), $options: "i" } } : {}
+      const condition = search ? { searchKeywords: { $regex: new RegExp(search), $options: 'i' } } : {}
 
       Product.find(condition)
         .then(data => {
@@ -107,10 +106,10 @@ export const getProduct = (req, res, next) => {
 }
 
 export const updateProduct = (req, res, next) => {
-  validateRequest({...req.params, ...req.body}, updateProductSchema, 'update product')
+  validateRequest({ ...req.params, ...req.body }, updateProductSchema, 'update product')
     .then(() => {
       const searchKeywords = genProductKeywords(req.body)
-      const product = {...req.body, searchKeywords}
+      const product = { ...req.body, searchKeywords }
 
       Product
         .findByIdAndUpdate(req.params.id, product, { useFindAndModify: false })
@@ -129,7 +128,7 @@ export const updateProduct = (req, res, next) => {
               'Successfully updated product',
               data
             )
-  
+
             req.handleSuccess(succ, res)
           }
         })
