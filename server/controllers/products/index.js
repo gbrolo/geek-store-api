@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes'
 import { ErrorHandler } from '../../handlers/error.js'
-import { genProductKeywords } from '../../helpers/utils.js'
+import { genProductKeywords, getPagination } from '../../helpers/utils.js'
 import validateRequest from '../../helpers/validations/validator.js'
 import productSchema from '../../helpers/validations/product.js'
 import getProductSchema from '../../helpers/validations/getProduct.js'
@@ -43,15 +43,35 @@ export const createProduct = (req, res, next) => {
 export const getProducts = (req, res, next) => {
   validateRequest(req.query, getProductsSchema, 'get products')
     .then(() => {
-      const search = req.query.search
+      const { search, page, size } = req.query
       const condition = search ? { searchKeywords: { $regex: new RegExp(search), $options: 'i' } } : {}
+      const { limit, offset } = getPagination(page, size)
 
-      Product.find(condition)
+      Product.paginate(condition, { offset, limit })
         .then(data => {
           const succ = new SuccessResponseHandler(
             StatusCodes.OK,
             'Successfully got products',
-            data
+            {
+              totalCount: data.totalDocs,
+              products: data.docs,
+              totalPages: data.totalPages,
+              currentPage: data.page - 1
+            },
+            [
+              {
+                header: 'total-count',
+                value: data.totalDocs
+              },
+              {
+                header: 'X-Total-Count',
+                value: data.totalDocs
+              },
+              {
+                header: 'total-pages',
+                value: data.totalPages
+              }
+            ]
           )
 
           req.handleSuccess(succ, res)

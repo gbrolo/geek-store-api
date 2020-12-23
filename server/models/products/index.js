@@ -1,4 +1,4 @@
-export default mongoose => {
+export default (mongoose, mongoosePaginate) => {
   const schema = mongoose.Schema(
     {
       sku: String,
@@ -22,6 +22,8 @@ export default mongoose => {
     object.id = _id
     return object
   })
+
+  schema.plugin(mongoosePaginate)
 
   const Product = mongoose.model('product', schema)
   return Product

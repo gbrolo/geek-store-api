@@ -182,6 +182,39 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "GET Paginated products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/products?size=2&page=1&search=star",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "2"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "search",
+							"value": "star"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}
