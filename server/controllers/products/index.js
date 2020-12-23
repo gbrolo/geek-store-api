@@ -5,6 +5,7 @@ import validateRequest from '../../helpers/validations/validator.js'
 import productSchema from '../../helpers/validations/product.js'
 import getProductSchema from '../../helpers/validations/getProduct.js'
 import getProductsSchema from '../../helpers/validations/getProducts.js'
+import getProductsWithConditionSchema from '../../helpers/validations/getProductsWithCondition.js'
 import updateProductSchema from '../../helpers/validations/updateProduct.js'
 import db from '../../models/index.js'
 import { SuccessResponseHandler } from '../../handlers/success.js'
@@ -40,6 +41,69 @@ export const createProduct = (req, res, next) => {
     .catch(error => next(error))
 }
 
+export const getProductsWithCondition = (req, res, next) => {
+  validateRequest({ ...req.query, ...req.body }, getProductsWithConditionSchema, 'get products with condition')
+    .then(() => {
+      const { search, page, size } = req.query
+      const { field, value } = req.body
+      console.log(field, value)
+      const findCondition = {}
+      findCondition[field] = value
+
+      const condition =
+        search
+          ? {
+              $and: [
+                { searchKeywords: { $regex: new RegExp(search), $options: 'i' } },
+                findCondition
+              ]
+            }
+          : {}
+
+      const { limit, offset } = getPagination(page, size)
+
+      Product.paginate(condition, { offset, limit, sort: '-createdAt' })
+        .then(data => {
+          const succ = new SuccessResponseHandler(
+            StatusCodes.OK,
+            'Successfully got products',
+            {
+              totalCount: data.totalDocs,
+              products: data.docs,
+              totalPages: data.totalPages,
+              currentPage: data.page - 1
+            },
+            [
+              {
+                header: 'total-count',
+                value: data.totalDocs
+              },
+              {
+                header: 'X-Total-Count',
+                value: data.totalDocs
+              },
+              {
+                header: 'total-pages',
+                value: data.totalPages
+              }
+            ]
+          )
+
+          req.handleSuccess(succ, res)
+        })
+        .catch(error => {
+          next(new ErrorHandler(
+            StatusCodes.INTERNAL_SERVER_ERROR,
+            'GET_PRODUCTS_CONDITION_ERROR',
+            error.message || 'Unexpected error while fetching products',
+            'get products with condition',
+            error
+          ))
+        })
+    })
+    .catch(error => next(error))
+}
+
 export const getProducts = (req, res, next) => {
   validateRequest(req.query, getProductsSchema, 'get products')
     .then(() => {
@@ -47,7 +111,7 @@ export const getProducts = (req, res, next) => {
       const condition = search ? { searchKeywords: { $regex: new RegExp(search), $options: 'i' } } : {}
       const { limit, offset } = getPagination(page, size)
 
-      Product.paginate(condition, { offset, limit })
+      Product.paginate(condition, { offset, limit, sort: '-createdAt' })
         .then(data => {
           const succ = new SuccessResponseHandler(
             StatusCodes.OK,

@@ -18,7 +18,7 @@ export default (object, schema, location) => {
         'INVALID_REQUEST_BODY',
         errorsMessages,
         location,
-        errors
+        errorsMessages
       ))
     }
   })

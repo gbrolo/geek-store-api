@@ -215,6 +215,51 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "GET paginated products with field condition",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"field\": \"category\",\r\n    \"value\": \"LEGO\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/products/advanced?size=2&page=0&search=star",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products",
+						"advanced"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "2"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "search",
+							"value": "star"
+						}
+					]
+				},
+				"description": "additionally send field conditions to match results"
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}
