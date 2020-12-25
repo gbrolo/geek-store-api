@@ -6,6 +6,7 @@ import winston from 'winston'
 
 import indexRouter from './routes/index'
 import productsRouter from './routes/products'
+import categoriesRouter from './routes/categories'
 
 import { handleError } from './handlers/error'
 import { handleSuccess } from './handlers/success'
@@ -43,6 +44,7 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, '../public')))
 app.use('/', indexRouter)
 app.use('/products', productsRouter)
+app.use('/categories', categoriesRouter)
 
 app.use(function (err, req, res, next) {
   handleError(err, req, res)
