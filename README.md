@@ -5,17 +5,25 @@
 
 ## Production ready
 ### Docker compose
-This REST API comes with an integrated ```docker-compose.yml``` file. To run production server just execute the following command:
+This REST API comes with an integrated ```docker-compose.yml``` file. To run production server just execute the following command at project's root directory:
 
 ```docker-compose up```
 
 This will set up a network and attach a MongoDB image and the server API and it will run on port ```3000```.
+
+To stop and delete containers, networks and volumes, run ```docker-compose down -v``` on project's root directory.
+
+### Initial DB data
+Running docker-compose will trigger a ```mongorestore``` command inside mongo container, which will initiate a ```geekstore``` dabatase with dummy data so you can make requests.
 
 #### Alternative docker compose command
 You can also run ```docker-compose up -d --build``` to start on detached mode and force Docker to rebuild images, so production image is always up to date.
 
 ### Production command
 ```npm start``` runs production command, which runs tests, cleans up code, and builds a ```dist-server``` directory to start the production server (not necessary to run if using Docker).
+
+### Requirements
+To run production locally on your machine, you will need to have MongoDB installed and running on port ```27017```. ```start``` command will trigger a ```mongorestore``` on a previously saved MongoDB dump, so  you will need a proper installation for MongoDB. This is already covered if running on Docker (it's recommended to use Docker).
 
 ## Development
 ### Pre-requisites
