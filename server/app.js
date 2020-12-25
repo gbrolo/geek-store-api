@@ -51,7 +51,7 @@ app.use(function (err, req, res, next) {
 db.mongoose
   .connect(db.url, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
   })
   .then(() => {
     console.log('[server-init] Connected to MongoDB')

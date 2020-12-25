@@ -1,15 +1,29 @@
-version: "2"
+# version: "2"
+version: "3.3"
 services: 
   web:
     environment: 
-      - MONGO_CONNECTION_URL=mongodb://mongo:27017
-    build: .
+      - MONGO_CONNECTION_URL=mongodb://mongo:27017/geekstore
+      - WAIT_HOSTS=mongo:27017    
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports: 
       - "3000:3000"
     depends_on: 
       - mongo
+    links: 
+      - mongo
   mongo:
-    image: mongo    
+    image: mongo
+    build:
+      context: .
+      dockerfile: mongo.Dockerfile
     ports: 
       - "27017:27017"
+    volumes: 
+      - mongo_data:/data/db
+
+volumes: 
+  mongo_data:
   
