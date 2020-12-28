@@ -58,7 +58,7 @@ export const getProductsWithCondition = (req, res, next) => {
                 findCondition
               ]
             }
-          : {}
+          : findCondition
 
       const { limit, offset } = getPagination(page, size)
 
